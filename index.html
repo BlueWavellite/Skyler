@@ -48,23 +48,22 @@
     align-items:center;
   }
 
-  header h1{
-    margin:0;
-    font-weight:700;
-    background: linear-gradient(90deg, #e6f7ff, #ffffff);
+  header h1 {
+    margin: 0;
+    font-weight: 700;
+    /* Navy-blue gradient */
+    background: linear-gradient(90deg, #001f4d, #000080, #191970);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: titleGradient 10s ease-in-out infinite alternate;
-    text-align:center;
-  }
+    text-align: center;
+}
 
-  #novel-title .title-line1 { font-size: 3rem; display:block; }
-  #novel-title .title-line2 { font-size: 2rem; display:block; }
+@keyframes titleGradient {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
 
-  @keyframes titleGradient{
-    0%{background-position:0% 50%;}
-    100%{background-position:100% 50%;}
-  }
 
   .cover img {
     max-width: 600px;
