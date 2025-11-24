@@ -11,23 +11,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout public repo with credentials to allow push
+      # 1️⃣ Checkout public repo (keep credentials for push)
       - name: Checkout public repo
         uses: actions/checkout@v3
         with:
-          persist-credentials: true
+          persist-credentials: false  # We'll control push manually
           fetch-depth: 0
 
-      # 2️⃣ Checkout private repo (without overwriting public repo credentials)
+      # 2️⃣ Debug: show remote & branch info
+      - name: Debug git info
+        run: |
+          echo "Git remote:"
+          git remote -v
+          echo "Current branches:"
+          git branch -vv
+          echo "HEAD commit:"
+          git rev-parse HEAD
+
+      # 3️⃣ Checkout private repo for fetching files
       - name: Checkout private repo
         uses: actions/checkout@v3
         with:
           repository: NidahBlueWavellite/mine
-          token: ${{ secrets.DONT }}
+          token: ${{ secrets.MT }}
           path: private-files
           persist-credentials: false
 
-      # 3️⃣ Copy files only if they exist
+      # 4️⃣ Copy files if they exist
       - name: Copy PDF and image
         run: |
           mkdir -p Skyler
@@ -38,17 +48,17 @@ jobs:
             cp private-files/Skyler.png Skyler/
           fi
 
-      # 4️⃣ Commit and push changes only if there are changes
+      # 5️⃣ Commit and push using PAT (fail-safe)
       - name: Commit and push changes
+        env:
+          PAT: ${{ secrets.DONT }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add Skyler/Skyler.pdf Skyler/Skyler.png
           if ! git diff --cached --quiet; then
             git commit -m "Update PDF and cover from private repo"
-            git push origin HEAD:main
+            echo "Pushing to remote using PAT..."
+            git push https://x-access-token:${PAT}@github.com/e/Skyler.git HEAD:main
           else
             echo "No changes to commit"
-          fi
-
-
