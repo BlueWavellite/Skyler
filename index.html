@@ -150,13 +150,12 @@
     <div class="genre">Genre: Slice of Life, Literary Fiction, Nature-Inspired, Personal Journey</div>
 
     <!-- ✅ Open custom PDF reader in new tab -->
-    <div class="download">
-      <button onclick="window.location.href='reader.html?file=Skyler/Skyler.pdf'">
-      Read Now
-      </button>
+   <div class="download">
+  <button onclick="window.location.href='reader.html?file=' + encodeURIComponent(pdfLink)">
+    Read Now
+  </button>
+</div>
 
-    </div>
-  </div>
 
   <div class="comments">
     <!-- Comments section placeholder -->
