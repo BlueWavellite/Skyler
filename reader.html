@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDF Reader</title>
+<title>Reader</title>
 
 <style>
-body {
+body{
   margin:0;
   font-family:'Roboto Slab', serif;
   background:#0d2a3a;
@@ -15,103 +15,99 @@ body {
   flex-direction:column;
   height:100vh;
 }
-
-.toolbar {
+.toolbar{
   display:flex;
-  align-items:center;
   gap:10px;
-  background:#082133;
   padding:8px 16px;
+  background:#082133;
   position:sticky;
   top:0;
-  z-index:10;
 }
-
-.toolbar button, .toolbar input {
-  background-color:#eee;
-  border:none;
+.toolbar button,input{
   padding:6px 10px;
+  border:none;
   border-radius:4px;
-  cursor:pointer;
-  color:#0d2a3a;
   font-weight:600;
 }
-
-.toolbar input[type="number"] {
-  width:60px;
-  text-align:center;
-}
-
-#pdf-frame {
+#pdf-frame{
   flex:1;
   border:none;
-  width:100%;
+}
+#stamp{
+  position:fixed;
+  bottom:8px;
+  right:12px;
+  font-size:12px;
+  opacity:.7;
 }
 </style>
 </head>
+
 <body>
 
 <div class="toolbar">
-  <button id="closeBtn">Close</button>
-  <span>Page:</span>
-  <input type="number" id="pageNumber" value="1" min="1">
-  <span id="pageCount">/ ?</span>
-  <button id="zoomIn">+</button>
-  <button id="zoomOut">−</button>
+  <button onclick="window.close()">Close</button>
+  <span>Page</span>
+  <input id="pageInput" type="number" value="1" min="1">
+  <span id="pageTotal">/ ?</span>
 </div>
 
 <iframe id="pdf-frame"></iframe>
+<div id="stamp">Last updated: loading…</div>
 
 <script>
-// --- PDF URL comes from index.html via query string ---
-const urlParams = new URLSearchParams(window.location.search);
-const pdfUrl = urlParams.get("file"); // e.g., passed from index.html
-
-if (!pdfUrl) {
-  alert("PDF file not specified!");
-  throw new Error("No PDF file provided");
-}
+const params = new URLSearchParams(location.search);
+const pdf = params.get("file");
+const mode = params.get("mode"); // preview | full
+const limit = Number(params.get("limit"));
 
 const frame = document.getElementById("pdf-frame");
-const pageInput = document.getElementById("pageNumber");
-const pageCountSpan = document.getElementById("pageCount");
-let scale = 1.2;
+const pageInput = document.getElementById("pageInput");
+const pageTotal = document.getElementById("pageTotal");
 
-// Load the PDF.js viewer (in repo root) with your PDF
-frame.src = `viewer.html?file=${encodeURIComponent(pdfUrl)}&disableDownload=true&disablePrint=true&disableOpenFile=true&scale=${scale}`;
+frame.src =
+`viewer.html?file=${encodeURIComponent(pdf)}
+&disableDownload=true
+&disablePrint=true
+&disableOpenFile=true`;
 
-// --- Close button ---
-document.getElementById("closeBtn").onclick = () => window.close();
+window.addEventListener("message", e => {
+  if(!e.data || e.data.type !== "pageChanged") return;
 
-// --- Zoom buttons ---
-document.getElementById("zoomIn").onclick = () => {
-  scale += 0.2;
-  reloadIframe();
-};
-document.getElementById("zoomOut").onclick = () => {
-  if (scale > 0.6) scale -= 0.2;
-  reloadIframe();
-};
+  let page = e.data.page;
+  let total = e.data.totalPages;
 
-function reloadIframe() {
-  frame.src = `viewer.html?file=${encodeURIComponent(pdfUrl)}&disableDownload=true&disablePrint=true&disableOpenFile=true&scale=${scale}`;
-}
+  if(mode === "preview"){
+    total = limit;
+    if(page > limit){
+      frame.contentWindow.postMessage({type:"goToPage",page:limit},"*");
+      return;
+    }
+  }
 
-// --- Page jump via input ---
+  pageInput.value = page;
+  pageTotal.textContent = "/ " + total;
+});
+
 pageInput.addEventListener("keydown", e => {
-  if (e.key === "Enter") {
-    const page = Number(pageInput.value);
-    frame.contentWindow.postMessage({ type: 'goToPage', page: page }, '*');
+  if(e.key === "Enter"){
+    let p = Number(pageInput.value);
+    if(mode === "preview" && p > limit) p = limit;
+    frame.contentWindow.postMessage({type:"goToPage",page:p},"*");
   }
 });
 
-// --- Listen for page changes from viewer ---
-window.addEventListener('message', event => {
-  if (event.data && event.data.type === 'pageChanged') {
-    pageInput.value = event.data.page;
-    pageCountSpan.textContent = `/ ${event.data.totalPages}`;
-  }
-});
+/* 🔒 FETCH FINAL PUBLISH DATE FROM GITHUB */
+fetch("https://api.github.com/repos/NidahBlueWavellite/Skyler/commits/main")
+  .then(r => r.json())
+  .then(d => {
+    const date = new Date(d.commit.committer.date);
+    document.getElementById("stamp").textContent =
+      "Last updated: " + date.toUTCString();
+  })
+  .catch(()=> {
+    document.getElementById("stamp").textContent = "Last updated: unavailable";
+  });
 </script>
 
 </body>
