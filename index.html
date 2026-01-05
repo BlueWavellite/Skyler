@@ -3,13 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Skyler, I wish to breathe another season — A Novella </title>
+<title>Skyler, I wish to breathe another season — A Novella</title>
 <meta name="description" content="Skyler: A nature-inspired, slice-of-life novel about friendship, resilience, and self-discovery.">
 
-<!-- Favicon / browser tab logo -->
 <link rel="icon" type="image/jpg" href="s.jpg">
 
-<!-- Open Graph (social media previews) -->
 <meta property="og:title" content="Skyler Novel">
 <meta property="og:description" content="Skyler: A nature-inspired, slice-of-life novel about friendship, resilience, and self-discovery.">
 <meta property="og:image" content="s.jpg">
@@ -19,148 +17,161 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-  body {
-    margin:0;
-    min-height:100vh;
-    font-family:'Roboto Slab', serif;
-    color: #001f4d;
-    background: linear-gradient(
-      120deg,
-      #E0FFFF 0%,
-      #89CFF0 12%,
-      #87CEEB 25%,
-      #6495ED 38%,
-      #00BFFF 50%,
-      #0096FF 62%,
-      #4fd1c5 72%,
-      #191970 85%,
-      #E0FFFF 100%
-    );
-    background-size: 300% 300%;
-    animation: chiffonFlow 80s ease-in-out infinite;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding:28px 16px;
-  }
+body {
+  margin:0;
+  min-height:100vh;
+  font-family:'Roboto Slab', serif;
+  color:#001f4d;
+  background:linear-gradient(
+    120deg,
+    #E0FFFF 0%,
+    #89CFF0 12%,
+    #87CEEB 25%,
+    #6495ED 38%,
+    #00BFFF 50%,
+    #0096FF 62%,
+    #4fd1c5 72%,
+    #191970 85%,
+    #E0FFFF 100%
+  );
+  background-size:300% 300%;
+  animation:chiffonFlow 80s ease-in-out infinite;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:28px 16px;
+}
 
-  @keyframes chiffonFlow {
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
-  }
+@keyframes chiffonFlow {
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
 
-  .wrapper{
-    width:100%;
-    max-width:920px;
-    padding:30px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
+.wrapper{
+  width:100%;
+  max-width:920px;
+  padding:30px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
 
-  header h1 {
-    margin: 0;
-    font-weight: 700;
-    font-family: 'Roboto Slab', serif;
-    background: linear-gradient(90deg, #001f4d, #000080, #191970);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-align: center;
-    animation: titleGradient 10s ease-in-out infinite alternate;
-  }
+header h1{
+  margin:0;
+  font-weight:700;
+  background:linear-gradient(90deg,#001f4d,#000080,#191970);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-align:center;
+}
 
-  @keyframes titleGradient {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
-  }
+#novel-title .title-line1{font-size:3rem;display:block;}
+#novel-title .title-line2{font-size:2rem;display:block;}
 
-  #novel-title .title-line1,
-  #novel-title .title-line2 {
-    display: block !important;
-  }
+.cover img{
+  max-width:600px;
+  max-height:90vh;
+  border-radius:10px;
+}
 
-  #novel-title .title-line1 { font-size: 3rem; }
-  #novel-title .title-line2 { font-size: 2rem; }
+.description{
+  max-width:760px;
+  text-align:center;
+  margin:18px auto;
+}
 
-  .cover img {
-    max-width: 600px;
-    max-height: 90vh;
-    border-radius: 10px;
-  }
+.meta-row{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+  margin-top:18px;
+}
 
-  .description{
-    max-width:760px;
-    text-align:center;
-    margin:18px auto;
-  }
+.genre{
+  padding:10px 14px;
+  border-radius:8px;
+  font-weight:700;
+}
 
-  .meta-row{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:12px;
-    margin-top:18px;
-  }
+.action button{
+  padding:12px 28px;
+  border-radius:8px;
+  background:#ffffffd2;
+  color:#001f4d;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+  transition:.3s;
+}
 
-  .genre{
-    padding:10px 14px;
-    border-radius:8px;
-    font-weight:700;
-  }
-
-  .download button{
-    padding:12px 28px;
-    border-radius:8px;
-    background:#ffffffd2;
-    color:#001f4d;
-    border:none;
-    font-weight:700;
-    cursor:pointer;
-    transition:0.3s;
-  }
-
-  .download button:hover{
-    background:#ffffff;
-    transform:scale(1.03);
-  }
-
-  .comments { margin-top:28px; max-width:760px; width:100%; }
+.action button:hover{
+  background:#ffffff;
+  transform:scale(1.03);
+}
 </style>
 </head>
 <body>
 
 <div class="wrapper">
-  <header>
-    <h1 id="novel-title">
-      <span class="title-line1">Skyler,</span>
-      <span class="title-line2">I wish to breathe another season</span>
-    </h1>
-  </header>
 
-  <div class="cover">
-    <img src="Skyler/Skyler.png" alt="Skyler cover image">
-  </div>
+<header>
+  <h1 id="novel-title">
+    <span class="title-line1">Skyler,</span>
+    <span class="title-line2">I wish to breathe another season</span>
+  </h1>
+</header>
 
-  <div class="description">
-    Nova, a girl who prefers solitude, unexpectedly meets a friend who draws her into new experiences. Through fleeting days and quiet moments, she gradually rediscovers the sources of hope, connection, and the simple joys that give life its breath. A nature-infused journey of friendship, resilience, and self-discovery.
-  </div>
-
-  <div class="meta-row">
-    <div class="genre">Genre: Slice of Life, Literary Fiction, Nature-Inspired, Personal Journey</div>
-
-    <!-- ✅ Open custom PDF reader in new tab -->
-   <div class="download">
-  <button onclick="window.location.href='reader.html?file=' + encodeURIComponent(pdfLink)">
-    Read Now
-  </button>
+<div class="cover">
+  <img src="Skyler/Skyler.png" alt="Skyler cover image">
 </div>
 
-
-  <div class="comments">
-    <!-- Comments section placeholder -->
-  </div>
+<div class="description">
+Nova, a girl who prefers solitude, unexpectedly meets a friend who draws her into new experiences. Through fleeting days and quiet moments, she gradually rediscovers the sources of hope, connection, and the simple joys that give life its breath.
 </div>
+
+<div class="meta-row">
+  <div class="genre">Genre: Slice of Life · Literary Fiction · Nature-Inspired</div>
+
+  <!-- PDF path -->
+  <script>
+    const pdfFile = "Skyler/Skyler.pdf";
+    const PREVIEW_PAGES = 10; // 🔧 change later
+  </script>
+
+  <div class="action">
+    <button onclick="
+      window.open(
+        'reader.html?file=' + encodeURIComponent(pdfFile) +
+        '&preview=' + PREVIEW_PAGES,
+        '_blank'
+      );
+    ">
+      Preview (First <span id="pcount">10</span> Pages)
+    </button>
+  </div>
+
+  <!-- FULL READER (COMMENTED FOR NOW)
+  <div class="action">
+    <button onclick="
+      window.open(
+        'reader.html?file=' + encodeURIComponent(pdfFile),
+        '_blank'
+      );
+    ">
+      Read Now
+    </button>
+  </div>
+  -->
+
+</div>
+</div>
+
+<script>
+document.getElementById("pcount").textContent = PREVIEW_PAGES;
+</script>
 
 </body>
 </html>
+
