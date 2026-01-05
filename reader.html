@@ -17,7 +17,7 @@ html, body {
   border: none;
 }
 
-/* Blur overlay */
+/* Blur overlay for soft preview */
 #blurOverlay {
   position: fixed;
   inset: 0;
@@ -63,7 +63,7 @@ html, body {
   z-index: 10000;
   pointer-events: none;
   font-family: 'Roboto Slab', serif;
-}
+} 
 </style>
 </head>
 
@@ -81,6 +81,9 @@ html, body {
 <div id="stamp">Last updated: loading…</div>
 
 <script>
+/* ===============================
+   PARAMETERS
+================================ */
 const params = new URLSearchParams(window.location.search);
 
 const pdf   = params.get("file");          // required
@@ -94,15 +97,9 @@ if (!pdf) {
 
 /* ===============================
    LOAD PDF.js VIEWER
-   Adjust path to viewer.html as needed
+   viewer.html is in the same folder
 ================================ */
-
-// If viewer.html is in the same folder
-// const viewerPath = "viewer.html";
-
-// If viewer.html is inside /web folder (typical PDF.js download)
-const viewerPath = "web/viewer.html";
-
+const viewerPath = "viewer.html"; 
 const viewerURL =
   viewerPath +
   "?file=" + encodeURIComponent(pdf) +
@@ -130,6 +127,7 @@ if (mode === "preview" && limit > 0) {
       const viewH     = win.innerHeight;
       const fullH     = doc.documentElement.scrollHeight;
 
+      /* approximate page detection: 20 pages assumed */
       const estimatedPage = Math.ceil((scrollTop + viewH) / (fullH / 20));
 
       if (estimatedPage > limit) {
@@ -161,7 +159,6 @@ fetch("https://api.github.com/repos/NidahBlueWavellite/Skyler/commits/main")
       "Last updated: unavailable";
   });
 </script>
-
 
 </body>
 </html>
